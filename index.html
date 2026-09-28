@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reme | Real Estate</title>
+  <meta name="description" content="Buy, sell, or invest with Reme. Local expertise, honest advice, and a smooth path home." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!--
+    EDITING GUIDE
+    Anything marked [[LIKE THIS]] is a placeholder. Search for "[[" to find them all.
+    Colors live in the :root block below; change --accent to re-brand the whole page.
+  -->
+
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --ink: #1c1b19;
+      --muted: #6b665e;
+      --line: #e7e2da;
+      --accent: #b0894f;
+      --accent-ink: #ffffff;
+      --dark: #171613;
+      --radius: 14px;
+      --max: 1180px;
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.08; letter-spacing: -.01em; }
+    h2 { font-size: clamp(34px, 4.5vw, 52px); margin: 10px 0 16px; }
+    .lede { color: var(--muted); font-size: 17px; max-width: 560px; }
+    section { padding: 110px 0; }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 26px; border-radius: 999px; font-weight: 600; font-size: 15px; border: 1px solid transparent; cursor: pointer; transition: transform .2s, background .2s, color .2s; font-family: inherit; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--accent); color: var(--accent-ink); }
+    .btn-primary:hover { background: #9a7641; }
+    .btn-ghost { border-color: rgba(255,255,255,.55); color: #fff; }
+    .btn-ghost:hover { background: #fff; color: var(--ink); }
+
+    /* ---------- Nav ---------- */
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background .3s, box-shadow .3s; }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+    .logo { font-family: var(--serif); font-size: 30px; font-weight: 600; color: #fff; letter-spacing: .02em; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 34px; align-items: center; }
+    .nav-links a { color: rgba(255,255,255,.88); font-size: 14px; font-weight: 500; }
+    .nav-links a:hover { color: #fff; }
+    .nav-links .btn { padding: 10px 20px; font-size: 14px; color: #fff; }
+    .nav.scrolled { background: rgba(250,248,245,.94); backdrop-filter: blur(10px); box-shadow: 0 1px 0 var(--line); }
+    .nav.scrolled .logo, .nav.scrolled .nav-links a { color: var(--ink); }
+    .nav.scrolled .nav-links .btn { color: #fff; }
+    .menu-btn { display: none; background: none; border: 0; color: #fff; cursor: pointer; }
+    .nav.scrolled .menu-btn { color: var(--ink); }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; color: #fff; padding: 140px 0 90px;
+      background: linear-gradient(180deg, rgba(10,10,8,.45) 0%, rgba(10,10,8,.35) 45%, rgba(10,10,8,.75) 100%),
+                  url("https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80") center/cover no-repeat; }
+    .hero h1 { font-size: clamp(46px, 7.5vw, 96px); max-width: 880px; margin: 18px 0 22px; }
+    .hero h1 em { font-style: italic; color: #e6cfa6; }
+    .hero p { font-size: 19px; max-width: 540px; color: rgba(255,255,255,.88); }
+    .hero .eyebrow { color: #e6cfa6; }
+    .hero-cta { display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
+
+    .search { margin-top: 56px; background: #fff; border-radius: 999px; padding: 8px; display: flex; max-width: 640px; box-shadow: 0 20px 50px rgba(0,0,0,.25); }
+    .search select, .search input { border: 0; outline: 0; font: inherit; font-size: 15px; color: var(--ink); background: transparent; padding: 0 18px; }
+    .search select { border-right: 1px solid var(--line); min-width: 110px; }
+    .search input { flex: 1; min-width: 0; }
+
+    /* ---------- Stats ---------- */
+    .stats { background: var(--dark); color: #fff; padding: 56px 0; }
+    .stats .wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .stat { min-width: 0; }
+    .stat b { display: block; overflow-wrap: anywhere; font-family: var(--serif); font-size: 50px; font-weight: 600; color: #e6cfa6; line-height: 1; }
+    .stat span { font-size: 14px; color: rgba(255,255,255,.65); }
+
+    /* ---------- About ---------- */
+    .about .wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: center; }
+    .about-img { position: relative; }
+    .about-img img { border-radius: var(--radius); aspect-ratio: 4/5; object-fit: cover; width: 100%; }
+    .about-img::after { content: ""; position: absolute; inset: 24px -24px -24px 24px; border: 1px solid var(--accent); border-radius: var(--radius); z-index: -1; }
+    .about p + p { margin-top: 16px; }
+    .about .body { color: var(--muted); font-size: 16.5px; }
+    .signature { font-family: var(--serif); font-style: italic; font-size: 34px; margin-top: 28px; color: var(--ink); }
+
+    /* ---------- Listings ---------- */
+    .listings { background: var(--surface); }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 50px; flex-wrap: wrap; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .card { border-radius: var(--radius); overflow: hidden; background: var(--bg); border: 1px solid var(--line); transition: transform .3s, box-shadow .3s; }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgba(28,27,25,.12); }
+    .card-img { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+    .card:hover .card-img img { transform: scale(1.05); }
+    .tag { position: absolute; top: 14px; left: 14px; background: #fff; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; }
+    .tag.sold { background: var(--dark); color: #fff; }
+    .card-body { padding: 22px 24px 24px; }
+    .price { font-family: var(--serif); font-size: 30px; font-weight: 600; }
+    .addr { color: var(--muted); font-size: 14.5px; margin: 2px 0 16px; }
+    .specs { display: flex; gap: 18px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
+    .specs b { color: var(--ink); font-weight: 600; }
+
+    /* ---------- Services ---------- */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 50px; }
+    .service { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 38px 32px; }
+    .service .icon { width: 52px; height: 52px; border-radius: 12px; background: #f3ebdd; color: var(--accent); display: grid; place-items: center; margin-bottom: 22px; }
+    .service h3 { font-size: 30px; margin-bottom: 10px; }
+    .service p { color: var(--muted); font-size: 15.5px; }
+    .service ul { list-style: none; margin-top: 18px; font-size: 14.5px; }
+    .service li { padding: 7px 0; border-top: 1px solid var(--line); }
+    .service li::before { content: "—"; color: var(--accent); margin-right: 10px; }
+
+    /* ---------- Testimonials ---------- */
+    .testimonials { background: var(--dark); color: #fff; }
+    .testimonials .lede { color: rgba(255,255,255,.65); }
+    .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 50px; }
+    .quote { border: 1px solid rgba(255,255,255,.14); border-radius: var(--radius); padding: 34px 30px; display: flex; flex-direction: column; }
+    .quote .stars { color: #e6cfa6; letter-spacing: 3px; margin-bottom: 16px; }
+    .quote blockquote { font-family: var(--serif); font-size: 23px; line-height: 1.35; flex: 1; }
+    .quote cite { display: block; margin-top: 24px; font-style: normal; font-size: 14px; color: rgba(255,255,255,.65); }
+    .quote cite b { color: #fff; font-weight: 600; display: block; }
+
+    /* ---------- Contact ---------- */
+    .contact .wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; }
+    .contact-info { margin-top: 34px; display: grid; gap: 22px; }
+    .contact-info div { display: flex; gap: 16px; align-items: flex-start; }
+    .contact-info svg { flex: none; color: var(--accent); margin-top: 3px; }
+    .contact-info small { display: block; color: var(--muted); font-size: 13px; }
+    .contact-info a:hover { color: var(--accent); }
+    form { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 40px; display: grid; gap: 18px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    label { font-size: 13px; font-weight: 600; display: grid; gap: 7px; }
+    input, select, textarea { font: inherit; font-size: 15px; font-weight: 400; padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); width: 100%; }
+    input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+    textarea { resize: vertical; min-height: 120px; }
+    form .btn { justify-content: center; }
+    .form-note { font-size: 14px; color: var(--accent); min-height: 1em; }
+
+    /* ---------- Footer ---------- */
+    footer { background: var(--dark); color: rgba(255,255,255,.6); padding: 56px 0 40px; font-size: 14px; }
+    footer .top { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,.12); }
+    footer .links { display: flex; gap: 26px; flex-wrap: wrap; }
+    footer a:hover { color: #fff; }
+    footer .bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 26px; font-size: 13px; }
+
+    /* ---------- Reveal on scroll ---------- */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 960px) {
+      section { padding: 80px 0; }
+      .about .wrap, .contact .wrap { grid-template-columns: 1fr; gap: 56px; }
+      .about-img { max-width: 460px; }
+      .grid, .services-grid, .quotes { grid-template-columns: 1fr 1fr; }
+      .stats .wrap { grid-template-columns: 1fr 1fr; row-gap: 36px; }
+    }
+    @media (max-width: 720px) {
+      .wrap { padding: 0 18px; }
+      .menu-btn { display: block; }
+      .nav-links { display: none; position: absolute; top: 76px; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--bg); padding: 10px 18px 22px; box-shadow: 0 12px 24px rgba(0,0,0,.08); }
+      .nav-links.open { display: flex; }
+      .nav-links a { color: var(--ink) !important; padding: 12px 0; width: 100%; }
+      .nav-links .btn { margin-top: 8px; justify-content: center; }
+      .grid, .services-grid, .quotes { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
+      form { padding: 26px 20px; }
+      .search { border-radius: 16px; flex-direction: column; gap: 6px; }
+      .search select { border-right: 0; border-bottom: 1px solid var(--line); padding: 12px 14px; }
+      .search input { padding: 12px 14px; }
+      .search .btn { justify-content: center; }
+      .about-img::after { inset: 14px -14px -14px 14px; }
+      .stat b { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= NAV ================= -->
+  <header class="nav" id="nav">
+    <div class="wrap">
+      <a href="#top" class="logo">Reme<span>.</span></a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#listings">Listings</a>
+        <a href="#services">Services</a>
+        <a href="#testimonials">Clients</a>
+        <a href="#contact" class="btn btn-primary">Let's Talk</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="eyebrow">Real Estate · [[City, State]]</div>
+      <h1>Find the place you'll <em>love</em> coming home to.</h1>
+      <p>Whether you're buying your first home, selling a family house, or growing your portfolio, Reme gives you local expertise, honest advice, and someone in your corner at every step.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">Schedule a Consultation</a>
+        <a href="#listings" class="btn btn-ghost">View Listings</a>
+      </div>
+
+      <form class="search" id="searchForm" aria-label="Property search">
+        <select aria-label="Buy or rent">
+          <option>Buy</option>
+          <option>Sell</option>
+          <option>Rent</option>
+        </select>
+        <input type="text" placeholder="Neighborhood, city, or ZIP" aria-label="Location" />
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ================= STATS ================= -->
+  <div class="stats">
+    <div class="wrap">
+      <div class="stat reveal"><b>[[10+]]</b><span>Years in the market</span></div>
+      <div class="stat reveal"><b>[[250+]]</b><span>Homes sold</span></div>
+      <div class="stat reveal"><b>[[$120M]]</b><span>In sales volume</span></div>
+      <div class="stat reveal"><b>[[5.0★]]</b><span>Average client rating</span></div>
+    </div>
+  </div>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="about-img reveal">
+        <!-- Replace with a real headshot of Reme (e.g. images/reme.jpg) -->
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=80" alt="Portrait of Reme" loading="lazy" />
+      </div>
+      <div class="reveal">
+        <div class="eyebrow">Meet Reme</div>
+        <h2>More than a transaction. It's your next chapter.</h2>
+        <div class="body">
+          <p>[[Write a short intro in Reme's voice: where they grew up, how they got into real estate, and why they love it.]] Buying or selling a home is one of the biggest decisions you'll make, and it deserves someone who listens first and sells second.</p>
+          <p>From pricing strategy and staging to negotiation and closing day, Reme handles the details so you can focus on what's next. Clients come back, and send their friends, because the experience feels personal from the first call to the final signature.</p>
+        </div>
+        <div class="signature">Reme</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LISTINGS ================= -->
+  <section class="listings" id="listings">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">Featured Properties</div>
+          <h2>Homes on the market</h2>
+          <p class="lede">A few of the properties Reme is representing right now. Reach out for private showings or off-market opportunities.</p>
+        </div>
+        <a href="#contact" class="btn btn-primary">Request a Showing</a>
+      </div>
+
+      <!-- Sample listings: replace photos, prices, and addresses with real ones -->
+      <div class="grid">
+        <article class="card reveal">
+          <div class="card-img">
+            <span class="tag">For Sale</span>
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80" alt="Modern two-story home" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <div class="price">$[[875,000]]</div>
+            <div class="addr">[[123 Maple Avenue, Neighborhood]]</div>
+            <div class="specs"><span><b>4</b> Beds</span><span><b>3</b> Baths</span><span><b>2,650</b> Sq Ft</span></div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-img">
+            <span class="tag">New Listing</span>
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80" alt="Contemporary home with pool" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <div class="price">$[[1,450,000]]</div>
+            <div class="addr">[[48 Harbor View Drive, Neighborhood]]</div>
+            <div class="specs"><span><b>5</b> Beds</span><span><b>4.5</b> Baths</span><span><b>3,900</b> Sq Ft</span></div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-img">
+            <span class="tag sold">Sold</span>
+            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=900&q=80" alt="Classic family home" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <div class="price">$[[640,000]]</div>
+            <div class="addr">[[9 Linden Court, Neighborhood]]</div>
+            <div class="specs"><span><b>3</b> Beds</span><span><b>2</b> Baths</span><span><b>1,980</b> Sq Ft</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES ================= -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="eyebrow">How Reme Helps</div>
+        <h2>Every move, handled with care</h2>
+        <p class="lede">Whatever brings you to the market, you'll get a clear plan, straight answers, and fast communication.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service reveal">
+          <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
+          <h3>Buying</h3>
+          <p>Find the right home at the right price, without the stress.</p>
+          <ul>
+            <li>Neighborhood &amp; school guidance</li>
+            <li>Early access to new listings</li>
+            <li>Tough, smart negotiation</li>
+          </ul>
+        </div>
+        <div class="service reveal">
+          <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 010-4h12v4"/><path d="M4 6v12a2 2 0 002 2h14v-4"/><path d="M18 12a2 2 0 000 4h4v-4z"/></svg></div>
+          <h3>Selling</h3>
+          <p>Market your home beautifully and sell for top dollar.</p>
+          <ul>
+            <li>Data-driven pricing strategy</li>
+            <li>Pro photography &amp; staging</li>
+            <li>Targeted marketing campaigns</li>
+          </ul>
+        </div>
+        <div class="service reveal">
+          <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+          <h3>Investing</h3>
+          <p>Build wealth with properties that make the numbers work.</p>
+          <ul>
+            <li>Rental &amp; cash-flow analysis</li>
+            <li>Off-market deal sourcing</li>
+            <li>1031 exchange coordination</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <!-- PLACEHOLDER quotes: replace with real client reviews before launch -->
+  <section class="testimonials" id="testimonials">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="eyebrow">Client Stories</div>
+        <h2>What clients are saying</h2>
+        <p class="lede">[[Replace these sample quotes with real reviews from Reme's clients.]]</p>
+      </div>
+      <div class="quotes">
+        <figure class="quote reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>[[Sample review: Reme made buying our first home feel easy. Always available, always honest.]]</blockquote>
+          <cite><b>[[Client Name]]</b>First-time buyers</cite>
+        </figure>
+        <figure class="quote reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>[[Sample review: Our house sold above asking in a week. The marketing plan was spot on.]]</blockquote>
+          <cite><b>[[Client Name]]</b>Sellers</cite>
+        </figure>
+        <figure class="quote reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>[[Sample review: Reme knows the numbers cold and found us a rental that cash-flowed from day one.]]</blockquote>
+          <cite><b>[[Client Name]]</b>Investor</cite>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="eyebrow">Get In Touch</div>
+        <h2>Let's talk about your move</h2>
+        <p class="lede">Tell Reme a little about what you're looking for. You'll get a personal reply within one business day.</p>
+
+        <div class="contact-info">
+          <div>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z"/></svg>
+            <span><small>Call or text</small><a href="tel:+10000000000">[[(000) 000-0000]]</a></span>
+          </div>
+          <div>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+            <span><small>Email</small><a href="mailto:hello@example.com" id="contactEmail">[[hello@example.com]]</a></span>
+          </div>
+          <div>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span><small>Office</small>[[Brokerage Name]] · [[Street Address, City, State]]</span>
+          </div>
+        </div>
+      </div>
+
+      <!--
+        The form opens the visitor's email app with the message pre-filled.
+        To collect submissions directly, set action="https://formspree.io/f/YOUR_ID" method="POST"
+        and delete the submit handler in the <script> below.
+      -->
+      <form id="contactForm" class="reveal">
+        <div class="row">
+          <label>Name<input name="name" type="text" required autocomplete="name" /></label>
+          <label>Phone<input name="phone" type="tel" autocomplete="tel" /></label>
+        </div>
+        <label>Email<input name="email" type="email" required autocomplete="email" /></label>
+        <label>I'm interested in
+          <select name="interest">
+            <option>Buying a home</option>
+            <option>Selling a home</option>
+            <option>Investing</option>
+            <option>Just exploring</option>
+          </select>
+        </label>
+        <label>Message<textarea name="message" placeholder="Timeline, budget, neighborhoods you love…"></textarea></label>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+        <p class="form-note" id="formNote" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="wrap">
+      <div class="top">
+        <a href="#top" class="logo">Reme<span>.</span></a>
+        <div class="links">
+          <a href="#about">About</a>
+          <a href="#listings">Listings</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+          <a href="[[https://instagram.com/yourhandle]]">Instagram</a>
+          <a href="[[https://linkedin.com/in/yourprofile]]">LinkedIn</a>
+        </div>
+      </div>
+      <div class="bottom">
+        <span>© <span id="year"></span> Reme · [[Brokerage Name]] · License #[[000000]]</span>
+        <span>Equal Housing Opportunity</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav background on scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open);
+      nav.classList.toggle('scrolled', open || window.scrollY > 40);
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }));
+
+    // Reveal-on-scroll animations
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Hero search: send people to the contact form with their search pre-filled
+    document.getElementById('searchForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const [mode, place] = [e.target.querySelector('select').value, e.target.querySelector('input').value.trim()];
+      const msg = document.querySelector('#contactForm textarea');
+      msg.value = `I'd like to ${mode.toLowerCase()}${place ? ' in ' + place : ''}.`;
+      document.querySelector('#contactForm select').value =
+        mode === 'Sell' ? 'Selling a home' : 'Buying a home';
+      document.getElementById('contact').scrollIntoView();
+    });
+
+    // Contact form: open email app with the message pre-filled
+    document.getElementById('contactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const f = new FormData(e.target);
+      const to = document.getElementById('contactEmail').getAttribute('href').replace('mailto:', '');
+      const subject = `Website inquiry: ${f.get('interest')}`;
+      const body = `Name: ${f.get('name')}\nEmail: ${f.get('email')}\nPhone: ${f.get('phone')}\n\n${f.get('message')}`;
+      window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      document.getElementById('formNote').textContent = 'Opening your email app. Thanks for reaching out!';
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
